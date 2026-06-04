@@ -4,8 +4,8 @@ import './HeaderApp.css'
 export const HeaderApp = () => {
     return(
         <>
+        <FaTasks />
         <header className="header-app">
-           <FaTasks />
            <h1>Gestor de Tareas</h1>
        </header>    
        <hr />        

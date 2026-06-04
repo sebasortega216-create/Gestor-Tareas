@@ -1,15 +1,35 @@
+/* src/index.css */
+:root {
+  --primary-color: #4176cd; /* Azul elegante para el encabezado */
+  --bg-color: #f4f6f9;      /* Fondo gris muy claro y limpio */
+  --card-color: #ffffff;    /* Fondo blanco para la lista de tareas */
+  --text-color: #333333;
+  --text-muted: #888888;
+  --danger-color: #e74c3c;  /* Rojo para el botón de eliminar */
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body, #root {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #d1d0d0;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 40px;
 }
 
+#root {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--card-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Para que el header respete las esquinas redondeadas */
+}

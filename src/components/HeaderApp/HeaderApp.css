@@ -1,22 +1,13 @@
+/* src/components/HeaderApp/HeaderApp.css */
 .header-app {
-    width: 100%;
-    height: 6rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background-color: #4776b8;
-    font-size: 2rem;
-    font-weight: bold;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 24px;
+  text-align: center;
 }
 
-hr {
-    width: 100%;
-    height: 0.1rem;
-    background-color: #000000;
-}
-
-h1 {
-    color: #ffffff;
-    font-size: 2rem;
+.header-app h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }

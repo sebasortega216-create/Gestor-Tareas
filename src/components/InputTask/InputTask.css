@@ -1,0 +1,46 @@
+/* src/components/InputTask/InputTask.css */
+
+.task-form {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0; /* Separa sutilmente el input de la lista de abajo */
+}
+
+.task-input {
+  flex-grow: 1; /* Hace que el input tome todo el espacio disponible */
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Efecto cuando el usuario da click para escribir */
+.task-input:focus {
+  border-color: var(--primary-color, #4176cd);
+  box-shadow: 0 0 0 3px rgba(65, 118, 205, 0.15);
+}
+
+.btn-add {
+  background-color: var(--primary-color, #4176cd);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efectos interactivos para el botón */
+.btn-add:hover {
+  background-color: #3462b5; /* Un azul un poco más oscuro al pasar el cursor */
+}
+
+.btn-add:active {
+  transform: scale(0.98); /* Pequeño efecto de hundido al dar click */
+}

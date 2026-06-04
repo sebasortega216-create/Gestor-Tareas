@@ -1,13 +1,18 @@
 import React from 'react'
 import { ItemTask } from '../ItemTask/ItemTask'
+const tasks = [
+  { id: 1, text: 'Comprar leche', completed: false },
+  { id: 2, text: 'Lavar el coche', completed: true },
+  { id: 3, text: 'Estudiar React', completed: false },
+]
 
 
 export const ListTasks = () => {
   return (
-    <ul>
-      <ItemTask task={{ id: 1, text: 'Task 1', completed: false }} onToggle={() => {}} onDelete={() => {}} />
-      <ItemTask task={{ id: 2, text: 'Task 2', completed: true }} onToggle={() => {}} onDelete={() => {}} />
-      <ItemTask task={{ id: 3, text: 'Task 3', completed: false }} onToggle={() => {}} onDelete={() => {}} /> 
+    <ul className="task-list">
+      {tasks.map((task) => (
+        <ItemTask key={task.id} task={task} />
+      ))}
     </ul>
   )
 }
