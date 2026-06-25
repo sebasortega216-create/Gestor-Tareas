@@ -1,13 +1,4 @@
 /* src/index.css */
-:root {
-  --primary-color: #4176cd; /* Azul elegante para el encabezado */
-  --bg-color: #f4f6f9;      /* Fondo gris muy claro y limpio */
-  --card-color: #ffffff;    /* Fondo blanco para la lista de tareas */
-  --text-color: #333333;
-  --text-muted: #888888;
-  --danger-color: #e74c3c;  /* Rojo para el botón de eliminar */
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -15,21 +6,62 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
   min-height: 100vh;
-  padding-top: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-#root {
+.glass-container {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2rem;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.btn-danger {
+  background: rgba(255, 80, 80, 0.4);
+  color: white;
+  border: 1px solid rgba(255, 80, 80, 0.6);
+}
+
+input {
   width: 100%;
-  max-width: 600px;
-  background-color: var(--card-color);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Para que el header respete las esquinas redondeadas */
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+h1, h2, h3 {
+  color: white;
 }
