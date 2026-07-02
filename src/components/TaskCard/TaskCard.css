@@ -1,0 +1,77 @@
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.task-title-completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-description {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: white;
+}
+
+.badge-pending {
+  background: rgba(255, 180, 60, 0.35);
+  border: 1px solid rgba(255, 180, 60, 0.6);
+}
+
+.badge-completed {
+  background: rgba(80, 220, 140, 0.3);
+  border: 1px solid rgba(80, 220, 140, 0.6);
+}
+
+.task-card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timer-display {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.timer-over {
+  color: #ff8080;
+}
+
+.task-card-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.task-card .btn:not(.btn-primary):not(.btn-danger) {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.task-card .btn:not(.btn-primary):not(.btn-danger):hover {
+  background: rgba(255, 255, 255, 0.3);
+}

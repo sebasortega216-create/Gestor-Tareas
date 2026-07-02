@@ -1,8 +1,0 @@
-/* src/components/ListTasks/ListTasks.css */
-.task-list {
-  list-style: none;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Separación uniforme entre cada tarea */
-}

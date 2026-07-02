@@ -1,4 +1,9 @@
+import { useState } from 'react';
 import { ReportExport } from '../components/ReportExport';
+import { TaskCard } from '../components/TaskCard/TaskCard';
+import { DashboardHeader } from '../components/DashboardHeader/DashboardHeader';
+import { StatsBar } from '../components/StatsBar/StatsBar';
+import { TaskForm } from '../components/TaskForm/TaskForm';
 import { useTasks } from '../hooks/useTasks';
 import { useAuth } from '../context/AuthContext';
 import { signOut } from 'firebase/auth';
@@ -6,31 +11,22 @@ import { auth } from '../services/firebaseConfig';
 import Swal from 'sweetalert2';
 
 export const Dashboard = () => {
-  const { tasks, addTask, deleteTask } = useTasks();
+  const {
+    tasks,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleComplete,
+    startTimer,
+    pauseTimer,
+    archiveTask,
+    unarchiveTask
+  } = useTasks();
   const { currentUser } = useAuth();
+  const [showArchived, setShowArchived] = useState(false);
 
   const handleLogout = async () => {
     await signOut(auth);
-  };
-
-  const handleCreate = async () => {
-    const { value: title } = await Swal.fire({
-      title: 'Nueva Tarea',
-      input: 'text',
-      inputPlaceholder: 'Nombre de la tarea',
-      showCancelButton: true,
-      confirmButtonText: 'Crear',
-      cancelButtonText: 'Cancelar'
-    });
-
-    if (title) {
-      addTask({
-        title,
-        description: '',
-        status: 'pending',
-        timeSpent: 0
-      });
-    }
   };
 
   const handleDelete = (id) => {
@@ -46,38 +42,71 @@ export const Dashboard = () => {
     });
   };
 
+  const handlePauseTimer = (task) => {
+    pauseTimer(task.id, task.timeSpent, task.startedAt);
+  };
+
+  const activeTasks = tasks.filter((t) => !t.archived);
+  const archivedTasks = tasks.filter((t) => t.archived);
+
   return (
     <div style={{ padding: '2rem' }}>
-      <div className="glass-container" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>Mis Tareas</h1>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <span style={{ color: 'rgba(255,255,255,0.8)' }}>{currentUser?.email}</span>
-          <button className="btn btn-primary" onClick={handleCreate}>+ Nueva Tarea</button>
-          <button className="btn btn-danger" onClick={handleLogout}>Cerrar Sesión</button>
-        </div>
-      </div>
+      <DashboardHeader userEmail={currentUser?.email} onLogout={handleLogout} />
+      <StatsBar tasks={activeTasks} />
+      <TaskForm onCreate={addTask} />
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {tasks.length === 0 && (
+        {activeTasks.length === 0 && (
           <div className="glass-container" style={{ textAlign: 'center' }}>
             <p style={{ color: 'rgba(255,255,255,0.7)' }}>No tienes tareas aún. ¡Crea una!</p>
           </div>
         )}
-        {tasks.map(task => (
-          <div key={task.id} className="glass-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h3>{task.title}</h3>
-              <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>
-                Estado: {task.status === 'pending' ? 'Pendiente' : 'Completada'}
-              </span>
-            </div>
-            <button className="btn btn-danger" onClick={() => handleDelete(task.id)}>
-              Eliminar
-            </button>
-          </div>
+        {activeTasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            task={task}
+            onToggleComplete={toggleComplete}
+            onDelete={handleDelete}
+            onStartTimer={startTimer}
+            onPauseTimer={handlePauseTimer}
+            onEdit={updateTask}
+            onArchive={archiveTask}
+            onUnarchive={unarchiveTask}
+          />
         ))}
       </div>
-      <ReportExport tasks={tasks} />
+
+      {archivedTasks.length > 0 && (
+        <div style={{ marginTop: '1.5rem' }}>
+          <button
+            className="btn"
+            style={{ background: 'rgba(255,255,255,0.15)', color: 'white', border: '1px solid rgba(255,255,255,0.3)' }}
+            onClick={() => setShowArchived(!showArchived)}
+          >
+            {showArchived ? 'Ocultar' : 'Ver'} archivadas ({archivedTasks.length})
+          </button>
+
+          {showArchived && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+              {archivedTasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onToggleComplete={toggleComplete}
+                  onDelete={handleDelete}
+                  onStartTimer={startTimer}
+                  onPauseTimer={handlePauseTimer}
+                  onEdit={updateTask}
+                  onArchive={archiveTask}
+                  onUnarchive={unarchiveTask}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <ReportExport tasks={activeTasks} />
     </div>
   );
 };

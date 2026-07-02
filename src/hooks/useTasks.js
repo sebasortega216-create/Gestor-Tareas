@@ -26,7 +26,15 @@ export const useTasks = () => {
 
   const addTask = async (task) => {
     const tasksRef = collection(db, `users/${currentUser.uid}/tasks`);
-    await addDoc(tasksRef, { ...task, createdAt: new Date() });
+    await addDoc(tasksRef, {
+      status: 'pending',
+      timeSpent: 0,
+      isRunning: false,
+      startedAt: null,
+      archived: false,
+      ...task,
+      createdAt: new Date()
+    });
   };
 
   const updateTask = async (taskId, updatedData) => {
@@ -39,5 +47,47 @@ export const useTasks = () => {
     await deleteDoc(taskRef);
   };
 
-  return { tasks, addTask, updateTask, deleteTask };
+  // Marca una tarea como completada o la reabre
+  const toggleComplete = async (taskId, currentStatus) => {
+    await updateTask(taskId, {
+      status: currentStatus === 'completed' ? 'pending' : 'completed'
+    });
+  };
+
+  // Inicia el cronómetro: guarda la marca de tiempo de arranque
+  const startTimer = async (taskId) => {
+    await updateTask(taskId, { isRunning: true, startedAt: Date.now() });
+  };
+
+  // Pausa el cronómetro: suma el tiempo transcurrido al acumulado y lo guarda
+  const pauseTimer = async (taskId, currentTimeSpent, startedAt) => {
+    const elapsed = startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0;
+    await updateTask(taskId, {
+      isRunning: false,
+      startedAt: null,
+      timeSpent: (currentTimeSpent || 0) + elapsed
+    });
+  };
+
+  // Archiva una tarea (deja de mostrarse en la lista principal)
+  const archiveTask = async (taskId) => {
+    await updateTask(taskId, { archived: true });
+  };
+
+  // Restaura una tarea archivada
+  const unarchiveTask = async (taskId) => {
+    await updateTask(taskId, { archived: false });
+  };
+
+  return {
+    tasks,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleComplete,
+    startTimer,
+    pauseTimer,
+    archiveTask,
+    unarchiveTask
+  };
 };
